@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>LINE 随机跳转</title>
+  <script>
+    // 配置 LINE 链接及权重（可自行修改）
+    const links = [
+      { url: 'https://line.me/ti/p/j7kaQQuy56', weight: 16 },
+      { url: 'https://line.me/ti/p/5vB7YBq_VU', weight: 25 },
+      { url: 'https://line.me/ti/p/b8-FP6YQgK', weight: 25 },
+      { url: 'https://line.me/ti/p/_Yafv3Pq7e', weight: 16 },
+      { url: 'https://line.me/ti/p/DK84CwEuAh', weight: 18 }
+    ];
+
+    function getRandomLink() {
+      const totalWeight = links.reduce((sum, link) => sum + link.weight, 0);
+      const random = Math.random() * totalWeight;
+      let cumulative = 0;
+      for (let link of links) {
+        cumulative += link.weight;
+        if (random < cumulative) {
+          return link.url;
+        }
+      }
+      return links[0].url; // 兜底
+    }
+
+    // 页面加载完立即跳转
+    window.onload = function() {
+      const target = getRandomLink();
+      window.location.href = target;
+    }
+  </script>
+</head>
+<body>
+  <h1>正在跳转 LINE...</h1>
+</body>
+</html>
